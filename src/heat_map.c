@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 18:21:58 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 19:51:13 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/18 20:00:10 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	fill_columns(t_board *board, int row, int col, int layer)
 	entry = 0;
 	if (col - 1 >= 0 && board->map[row][col - 1] == 0 && (entry = 1))
 		board->map[row][col - 1] = layer;
-	if (col + 1 < board->w && board->map[row][col + 1] == 0 && (entry + 1))
+	if (col + 1 < board->w && board->map[row][col + 1] == 0 && (entry = 1))
 		board->map[row][col + 1] = layer;
 	if (board->map[row][col] == 0 && (entry = 1))
 		board->map[row][col] = layer;
