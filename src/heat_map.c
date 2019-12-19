@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 18:21:58 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 20:00:10 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/18 21:22:33 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	fill_columns(t_board *board, int row, int col, int layer)
 {
-	int		entry;
+	int	entry;
 
 	entry = 0;
 	if (col - 1 >= 0 && board->map[row][col - 1] == 0 && (entry = 1))
@@ -28,8 +28,8 @@ static int	fill_columns(t_board *board, int row, int col, int layer)
 
 static int	surround_target(t_board *board, int row, int col, int layer)
 {
-	int		entry;
-	int		res;
+	int	entry;
+	int	res;
 
 	res = 0;
 	entry = 0;
@@ -50,10 +50,10 @@ static int	surround_target(t_board *board, int row, int col, int layer)
 
 static int	superpose(t_board *board, int target, int layer)
 {
-	int		row;
-	int		col;
-	int		entry;
-	int		res;
+	int	row;
+	int	col;
+	int	entry;
+	int	res;
 
 	entry = 0;
 	res = 0;
@@ -75,10 +75,10 @@ static int	superpose(t_board *board, int target, int layer)
 	return (res);
 }
 
-int			heat_map(t_board *board, int player)
+void		heat_map(t_board *board, int player)
 {
-	int		target;
-	int		layer;
+	int	target;
+	int	layer;
 
 	target = player == 1 ? 2 : 1;
 	layer = 3;
@@ -87,5 +87,4 @@ int			heat_map(t_board *board, int player)
 		target = layer;
 		layer++;
 	}
-	return (target);
 }

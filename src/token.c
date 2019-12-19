@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 19:32:53 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 17:37:30 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/19 16:10:18 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			read_token(t_token *token)
 			return (0);
 		row++;
 	}
+//	print_map(token->map, token->h, token->w);
 	if (clean_token(token) == 0)
 		return (0);
 	return (1);

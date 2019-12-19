@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 19:40:48 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 18:18:14 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/18 22:10:37 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		read_header(char *target, int *height, int *width)
 	line = NULL;
 	if ((line = read_line()) == NULL)
 		return (0);
-	ft_putendl_fd(line, 2);
 	buffer_1 = ft_strsplit_del(line, ":");
 	if (ft_chain_size(buffer_1) != 1)
 	{

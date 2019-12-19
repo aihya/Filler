@@ -6,7 +6,7 @@
 /*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 17:31:01 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 17:07:27 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/18 22:45:04 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	read_player()
 	line = NULL;
 	if ((line = read_line()) == NULL)
 		return (0);
-	ft_putendl_fd(line, 2);
 	if (ft_strstr(line, "$$$ exec p1 :") == NULL
 	&&	ft_strstr(line, "$$$ exec p2 :") == NULL)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filler.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 17:26:16 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 19:53:15 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/19 17:57:58 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,24 @@
 char	*read_line()
 {
 	char	*line;
-	char	buffer[1];
+	char	buff[1];
+	char	buffer[1024];
 	int		ret;
+	int		i;
 
 	line = NULL;
 	ret = 0;
-	while ((ret = read(STDIN_FILENO, buffer, 1)) != -1)
+	i = 0;
+	while ((ret = read(STDIN_FILENO, buff, 1)) != -1 && i < 1023)
 	{
-		if (ft_strchr(buffer, '\n') || ret == 0)
+		if (ft_strchr(buff, '\n') || ret == 0)
 			break ;
-		ft_strappend(&line, buffer[0], 1);
+		buffer[i] = buff[0];
 		ret = 0;
+		i++;
 	}
+	buffer[i] = 0;
+	line = ft_strdup(buffer);
 	return (line);
 }
 
@@ -81,7 +87,10 @@ void	print_map(int **map, int h, int w)
 		j = 0;
 		while (j < w)
 		{
-			ft_putchar_fd(map[i][j] + 48, 2);
+			if (map[i][j] == 0)
+				ft_putchar_fd('.', 2);
+			else
+				ft_putchar_fd(map[i][j] + 48, 2);
 			j++;
 		}
 		ft_putchar_fd('\n', 2);
@@ -91,37 +100,45 @@ void	print_map(int **map, int h, int w)
 
 void	filler()
 {
-	int		player;
-	t_board	board;
-	t_token	token;
+	t_data	data;
+	// t_board	board;
+	// t_token	token;
 
-	player = 0;
-	if ((player = read_player()) == 0)
+	data.player = 0;
+	if ((data.player = read_player()) == 0)
 		return ;
-	board.map = NULL;
-	token.map = NULL;
-	token.r_offset = 0;
-	token.c_offset = 0;
+	data.board.map = NULL;
+	data.token.map = NULL;
+	// data.board = NULL;
+	// data.token = NULL;
+	
 	while (1337)
 	{
-		ft_putendl_fd("Board:", 2);
-		if (read_board(&board) == 0)
+		if (read_board(&(data.board)) == 0)
 		{
 			ft_putendl_fd("Board Error", 2);
-			free_map(&(board.map), board.h, board.w);
+			free_map(&(data.board.map), data.board.h, data.board.w);
 			return ;
 		}
-		ft_putendl_fd("Token", 2);
-		if (read_token(&token) == 0)
+//		ft_putendl_fd("Board", 2);
+//		print_map(data.board.map, data.board.h, data.board.w);
+		if (read_token(&(data.token)) == 0)
 		{
-			free_map(&(token.map), token.h, token.w);
+			free_map(&(data.token.map), data.token.h, data.token.w);
 			ft_putendl_fd("Token Error", 2);
 			return ;
 		}
-		print_map(token.map, token.h, token.w);
-		ft_putendl_fd("Heat Map:", 2);
-		position(&board, &token, player);
-		print_map(board.map, board.h, board.w);
-		ft_putstr_fd("8 1\n", STDOUT_FILENO);
+//		ft_putendl_fd("Token", 2);
+//		print_map(data.token.map, data.token.h, data.token.w);
+		data.row = 0;
+		data.col = 0;
+//		ft_putendl_fd("+++++++++", 2);
+		position(&data);
+	//	dprintf(2, "%d %d\n", data.row - data.token.r_offset, data.col - data.token.c_offset);
+		ft_putnbr_fd(data.row - data.token.r_offset, STDOUT_FILENO);
+		ft_putchar_fd(' ', STDOUT_FILENO);
+		ft_putnbr_fd(data.col - data.token.c_offset, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	//	ft_putendl_fd("8 1", STDOUT_FILENO);
 	}
 }

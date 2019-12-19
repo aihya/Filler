@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 20:18:45 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/18 17:36:44 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/19 16:11:28 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,29 @@ int		last_one(t_token *token, int row)
 void	set_offsets(t_token *token)
 {
 	int	row;
-	int	pos;
+	int	col;
+	int	min;
 
+	token->r_offset = 0;
+	token->c_offset = 0;
 	row = 0;
 	while (row < token->h)
 	{
-		if ((pos = first_one(token, row)) >= 0)
+		if ((col = first_one(token, row)) >= 0)
 			break ;
 		row++;
 	}
 	token->r_offset = row == token->h ? 0 : row;
 	row = 0;
+	min = token->w;
 	while (row < token->h)
 	{
-		pos = first_one(token, row);
-		if (token->c_offset == 0)
-			token->c_offset = pos > 0 ? pos : 0;
-		else if (pos >= 0 && pos < token->c_offset)
-			token->c_offset = pos;
+		col = first_one(token, row);
+		if (col >= 0 && col < min)
+			min = col;
 		row++;
 	}
+	token->c_offset = min < token->w ? min : token->c_offset;
 }
 
 void	set_token_dimentions(t_token *token, int *new_h, int *new_w)
@@ -85,6 +88,7 @@ void	set_token_dimentions(t_token *token, int *new_h, int *new_w)
 	int	pos;
 
 	row = 0;
+	
 	while (row < token->h)
 	{
 		(*new_h) = star(token, row) ? (*new_h) + 1 : (*new_h);
@@ -141,6 +145,8 @@ int		clean_token(t_token *token)
 	new_height = 0;
 	new_width = 0;
 	set_token_dimentions(token, &new_height, &new_width);
+//	dprintf(2, "Offsets: %d, %d\n", token->r_offset, token->c_offset);
+//	dprintf(2, "Dimensions: %d, %d\n", new_height, new_width);
 	if (trim_offsets(token, new_height, new_width) == 0)
 		return (0);
 	token->h = new_height;
