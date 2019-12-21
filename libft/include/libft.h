@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 23:15:26 by aihya             #+#    #+#             */
-/*   Updated: 2019/11/29 18:38:30 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/19 19:55:38 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 
 # define BEGINING 0
 # define LAST_POS -1
+
+typedef struct	s_node
+{
+	char			*content;
+	struct s_node	*next;
+}				t_node;
 
 char		*ft_strappend(char **a_s1, char c, int overwrite);
 int			ft_isalphanumeric(char c);

@@ -6,13 +6,13 @@
 /*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 17:26:16 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/19 17:57:58 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/21 16:17:33 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-char	*read_line()
+char	*read_line(void)
 {
 	char	*line;
 	char	buff[1];
@@ -20,6 +20,7 @@ char	*read_line()
 	int		ret;
 	int		i;
 
+	buff[0] = '\0';
 	line = NULL;
 	ret = 0;
 	i = 0;
@@ -36,7 +37,7 @@ char	*read_line()
 	return (line);
 }
 
-void	free_map(int ***map, int height, int width)
+void	free_map(int ***map, int height)
 {
 	int		row;
 
@@ -58,13 +59,16 @@ int		init_map(int ***map, int height, int width)
 	int	y;
 	int	x;
 
-	y = 0;
 	if (((*map) = (int **)malloc(sizeof(int *) * height)) == NULL)
 		return (0);
+	y = 0;
 	while (y < height)
 	{
 		if (((*map)[y] = (int *)malloc(sizeof(int) * width)) == NULL)
+		{
+			free_map(map, height);
 			return (0);
+		}
 		x = 0;
 		while (x < width)
 		{
@@ -76,69 +80,47 @@ int		init_map(int ***map, int height, int width)
 	return (1);
 }
 
-void	print_map(int **map, int h, int w)
+int		error(t_data *data, int target)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < h)
+	if (target == 1)
 	{
-		j = 0;
-		while (j < w)
-		{
-			if (map[i][j] == 0)
-				ft_putchar_fd('.', 2);
-			else
-				ft_putchar_fd(map[i][j] + 48, 2);
-			j++;
-		}
-		ft_putchar_fd('\n', 2);
-		i++;
+		ft_putendl_fd("Board Error", 2);
+		free_map(&(data->board.map), data->board.h);
 	}
+	else
+	{
+		ft_putendl_fd("Token Error", 2);
+		free_map(&(data->token.map), data->token.h);
+	}
+	return (0);
 }
 
-void	filler()
+int		filler(void)
 {
 	t_data	data;
-	// t_board	board;
-	// t_token	token;
 
 	data.player = 0;
 	if ((data.player = read_player()) == 0)
-		return ;
+		return (0);
 	data.board.map = NULL;
 	data.token.map = NULL;
-	// data.board = NULL;
-	// data.token = NULL;
-	
 	while (1337)
 	{
 		if (read_board(&(data.board)) == 0)
-		{
-			ft_putendl_fd("Board Error", 2);
-			free_map(&(data.board.map), data.board.h, data.board.w);
-			return ;
-		}
-//		ft_putendl_fd("Board", 2);
-//		print_map(data.board.map, data.board.h, data.board.w);
+			return (error(&data, 1));
 		if (read_token(&(data.token)) == 0)
-		{
-			free_map(&(data.token.map), data.token.h, data.token.w);
-			ft_putendl_fd("Token Error", 2);
-			return ;
-		}
-//		ft_putendl_fd("Token", 2);
-//		print_map(data.token.map, data.token.h, data.token.w);
+			return (error(&data, 2));
 		data.row = 0;
 		data.col = 0;
-//		ft_putendl_fd("+++++++++", 2);
 		position(&data);
-	//	dprintf(2, "%d %d\n", data.row - data.token.r_offset, data.col - data.token.c_offset);
 		ft_putnbr_fd(data.row - data.token.r_offset, STDOUT_FILENO);
 		ft_putchar_fd(' ', STDOUT_FILENO);
 		ft_putnbr_fd(data.col - data.token.c_offset, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	//	ft_putendl_fd("8 1", STDOUT_FILENO);
 	}
+	if (data.board.map)
+		free_map(&(data.board.map), data.board.h);
+	if (data.token.map)
+		free_map(&(data.token.map), data.token.h);
+	return (1);
 }

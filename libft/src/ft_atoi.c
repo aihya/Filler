@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/15 20:12:26 by aihya             #+#    #+#             */
-/*   Updated: 2018/10/28 15:20:09 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/21 15:08:11 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,24 @@
 
 int		ft_atoi(const char *str)
 {
-	int		n;
-	int		len;
+	int		i;
 	int		sign;
-	char	*s;
+	int		n;
 
-	s = ft_strtrim(str);
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
+		return (0);
 	sign = 1;
-	if (*s == '-' && (sign = -1))
-		s++;
-	else if (s[0] == '+')
-		s++;
-	while (*s == '0')
-		s++;
-	len = 0;
-	while (ft_isdigit(s[len]))
-		len++;
-	if (len > 10 && sign == 1)
-		return (-1);
-	if (len > 10 && sign == -1)
+	if ((str[i] == '-' && (sign = -1)) || str[i] == '+')
+		i++;
+	while (str[i] && str[i] == '0')
+		i++;
+	if (!ft_isdigit(str[i]) || str[i] == '\0')
 		return (0);
 	n = 0;
-	while (ft_isdigit(*s++))
-		n = (n * 10) + (*(s - 1) - 48);
+	while (ft_isdigit(str[i]))
+		n = (n * 10) + (str[i++] - 48);
 	return (n * sign);
 }

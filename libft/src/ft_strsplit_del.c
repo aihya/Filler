@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit_del.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@stident.1337.ma>              +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 19:03:03 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/01 17:45:11 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/19 19:56:02 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
-
-typedef struct	s_node
-{
-	char			*content;
-	struct s_node	*next;
-}				t_node;
 
 static t_node	*new_node(char *str, unsigned int start, size_t c)
 {
@@ -49,7 +43,7 @@ static void		node_push(t_node **head, t_node *node)
 	}
 }
 
-static char	**free_list(t_node **head)
+static char		**free_list(t_node **head)
 {
 	t_node	*curr;
 	t_node	*next;
@@ -96,11 +90,10 @@ static t_node	*fill_list(char *str, char *del, size_t *counter)
 			(*counter)++;
 		}
 	}
-
 	return (head);
 }
 
-char	**ft_strsplit_del(char *str, char *del)
+char			**ft_strsplit_del(char *str, char *del)
 {
 	char	**buff;
 	t_node	*head;
