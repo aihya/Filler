@@ -6,7 +6,7 @@
 #    By: aihya <aihya@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/30 10:17:50 by aihya             #+#    #+#              #
-#    Updated: 2019/12/19 19:02:21 by aihya            ###   ########.fr        #
+#    Updated: 2019/12/22 16:44:25 by aihya            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC_NAME =	main.c \
 			header.c \
 			position.c \
 			heat_map.c \
+			free_maps.c \
 			indexs.c
 
 OBJ_NAME =	$(SRC_NAME:.c=.o)
@@ -46,7 +47,6 @@ $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@echo "Compiling \033[1;36m[$<]\033[0m to \033[1;32m[$@]\033[0m"
 	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $<
-#	@gcc $(INCLUDE) -o $@ -c $<
 
 libft_all:
 	@make -C libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   board.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 17:53:48 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/21 15:57:24 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/22 15:52:34 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,13 @@ int			read_board(t_board *board)
 	if (init_map(&(board->map), board->h, board->w) == 0)
 		return (0);
 	row = 0;
-	while (row < height)
+	while (row++ < height)
 	{
-		if (read_row(board, row) == 0)
+		if (read_row(board, row - 1) == 0)
 		{
 			free_map(&(board->map), board->h);
 			return (0);
 		}
-		row++;
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filler.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:44:01 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/19 19:10:13 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/22 15:52:28 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,22 @@ typedef struct	s_data
 	t_token	token;
 }				t_data;
 
-char	*read_line();
-int		read_player();
-int		filler(void);
-int		read_board(t_board *board);
-int		init_map(int ***map, int height, int width);
-int		read_header(char *target, int *height, int *width);
-int		read_token(t_token *token);
-int		clean_token(t_token *token);
-void	print_map(int **map, int h, int w);
-void	free_map(int ***map, int height);
-void	heat_map(t_board *board, int player);
-void	position(t_data *data);
-int		star(t_token *token, int row);
-int		first_one(t_token *token, int row);
-int		last_one(t_token *token, int row);
-
+void			free_maps(t_data *data);
+void			free_map(int ***map, int height);
+char			*read_line();
+int				read_player();
+int				filler(void);
+int				read_board(t_board *board);
+int				init_map(int ***map, int height, int width);
+int				read_header(char *target, int *height, int *width);
+int				read_token(t_token *token);
+int				clean_token(t_token *token);
+void			print_map(int **map, int h, int w);
+void			free_map(int ***map, int height);
+void			heat_map(t_board *board, int player);
+void			position(t_data *data);
+int				star(t_token *token, int row);
+int				first_one(t_token *token, int row);
+int				last_one(t_token *token, int row);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 20:18:45 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/21 15:48:27 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/22 16:06:14 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ void	set_token_dimentions(t_token *token, int *new_h, int *new_w)
 	(*new_w) -= token->c_offset;
 }
 
+int		free_on_error(int ***map, int height)
+{
+	free_map(map, height);
+	return (0);
+}
+
 int		trim_offsets(t_token *token, int new_h, int new_w)
 {
 	int	r;
@@ -68,16 +74,13 @@ int		trim_offsets(t_token *token, int new_h, int new_w)
 	int	**map;
 
 	if ((map = (int **)malloc(sizeof(int *) * new_h)) == NULL)
-		return (0);
+		return (free_on_error(&(token->map), new_h));
 	i = 0;
 	r = token->r_offset;
 	while (r < new_h + token->r_offset)
 	{
 		if ((map[i] = (int *)malloc(sizeof(int) * new_w)) == NULL)
-		{
-			free_map(&map, new_h);
-			return (0);
-		}
+			return (free_on_error(&(token->map), new_h));
 		j = 0;
 		c = token->c_offset;
 		while (c < new_w + token->c_offset)

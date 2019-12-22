@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filler.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aihya <aihya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aihya <aihya@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 17:26:16 by aihya             #+#    #+#             */
-/*   Updated: 2019/12/21 16:17:33 by aihya            ###   ########.fr       */
+/*   Updated: 2019/12/22 15:52:37 by aihya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,6 @@ char	*read_line(void)
 	buffer[i] = 0;
 	line = ft_strdup(buffer);
 	return (line);
-}
-
-void	free_map(int ***map, int height)
-{
-	int		row;
-
-	row = 0;
-	while (row < height)
-	{
-		if ((*map)[row] != NULL)
-		{
-			free((*map)[row]);
-			(*map)[row] = NULL;
-		}
-		row++;
-	}
-	(*map) = NULL;
 }
 
 int		init_map(int ***map, int height, int width)
@@ -83,15 +66,10 @@ int		init_map(int ***map, int height, int width)
 int		error(t_data *data, int target)
 {
 	if (target == 1)
-	{
 		ft_putendl_fd("Board Error", 2);
-		free_map(&(data->board.map), data->board.h);
-	}
 	else
-	{
 		ft_putendl_fd("Token Error", 2);
-		free_map(&(data->token.map), data->token.h);
-	}
+	free_maps(data);
 	return (0);
 }
 
@@ -117,10 +95,8 @@ int		filler(void)
 		ft_putchar_fd(' ', STDOUT_FILENO);
 		ft_putnbr_fd(data.col - data.token.c_offset, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
+		free_maps(&data);
 	}
-	if (data.board.map)
-		free_map(&(data.board.map), data.board.h);
-	if (data.token.map)
-		free_map(&(data.token.map), data.token.h);
+	free_maps(&data);
 	return (1);
 }
